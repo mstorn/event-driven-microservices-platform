@@ -77,16 +77,22 @@ This balances development speed with reliable test coverage.
 
 # Project Structure
 
+```
 event-driven-microservices-platform
 │
-├ services
-│ └ order-service
-│ ├ controller
-│ ├ service
-│ ├ domain
-│ ├ repository
-│ ├ event
-│ └ config
+├─ infrastructure
+│
+├─ services
+│ └─ order-service
+│ ├─ controller
+│ ├─ service
+│ ├─ domain
+│ ├─ repository
+│ ├─ event
+│ └─ config
+│
+└─ README.md
+```
 
 The first service currently implemented is the **Order Service**, which exposes a REST API to create orders.
 

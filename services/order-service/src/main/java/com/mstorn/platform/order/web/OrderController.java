@@ -1,7 +1,7 @@
-package com.mstorn.platform.order.controller;
+package com.mstorn.platform.order.web;
 
-import com.mstorn.platform.order.domain.Order;
-import com.mstorn.platform.order.service.OrderService;
+import com.mstorn.platform.order.domain.model.Order;
+import com.mstorn.platform.order.application.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

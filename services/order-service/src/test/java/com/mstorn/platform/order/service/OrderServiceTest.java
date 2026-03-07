@@ -25,11 +25,13 @@ class OrderServiceTest {
 
     @Test
     void shouldCreateOrder() {
-        Order order = service.createOrder("Laptop", 2);
+        Order order = new Order("Laptop", 2);
 
-        assertNotNull(order.getId());
-        assertEquals("Laptop", order.getDescription());
-        assertEquals(2, order.getQuantity());
+        Order created = service.createOrder(order);
+
+        assertNotNull(created.getId());
+        assertEquals("Laptop", created.getDescription());
+        assertEquals(2, created.getQuantity());
 
         verify(publisher).publishOrderCreated(any(OrderCreatedEvent.class));
     }

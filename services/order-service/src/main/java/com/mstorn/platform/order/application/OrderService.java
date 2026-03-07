@@ -18,10 +18,9 @@ public class OrderService {
         this.eventPublisher = eventPublisher;
     }
 
-    public Order createOrder(String description, int quantity) {
+    public Order createOrder(Order order) {
 
-        log.info("Creating order with description='{}'", description);
-        Order order = new Order(description, quantity);
+        log.info("Creating order {}", order.getId());
 
         OrderCreatedEvent event =
                 new OrderCreatedEvent(order.getId(), order.getDescription(), order.getQuantity());

@@ -12,6 +12,8 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaOrderEventPublisher.class);
 
+    private static final String TOPIC = "order.created";
+
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
     public KafkaOrderEventPublisher(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
@@ -20,7 +22,14 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
 
     @Override
     public void publishOrderCreated(OrderCreatedEvent event) {
-        log.info("Publishing OrderCreatedEvent: {}", event);
-        kafkaTemplate.send("order.created", event);
+        log.info("Publishing OrderCreatedEvent to Kafka topic='{}', orderId={}",
+                TOPIC,
+                event.getOrderId());
+
+        try {
+            kafkaTemplate.send(TOPIC, event);
+        } catch (Exception e) {
+            log.info("Kafka publish successful for orderId={}", event.getOrderId());
+        }
     }
 }

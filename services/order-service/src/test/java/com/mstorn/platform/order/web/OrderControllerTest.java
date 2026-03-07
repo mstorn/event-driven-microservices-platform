@@ -50,4 +50,17 @@ class OrderControllerTest {
         mockMvc.perform(post("/orders"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void shouldReturn400_whenQuantityInvalid() throws Exception {
+        mockMvc.perform(post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                    {
+                      "description": "Test",
+                      "quantity": 0
+                    }
+                    """))
+                .andExpect(status().isBadRequest());
+    }
 }

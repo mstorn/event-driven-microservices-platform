@@ -1,8 +1,8 @@
 package com.mstorn.platform.order.application;
 
+import com.mstorn.platform.order.application.port.OrderEventPublisher;
 import com.mstorn.platform.order.domain.model.Order;
 import com.mstorn.platform.order.domain.event.OrderCreatedEvent;
-import com.mstorn.platform.order.application.port.OrderEventPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

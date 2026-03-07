@@ -21,5 +21,6 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
     @Override
     public void publishOrderCreated(OrderCreatedEvent event) {
         log.info("Publishing OrderCreatedEvent: {}", event);
+        kafkaTemplate.send("order.created", event);
     }
 }

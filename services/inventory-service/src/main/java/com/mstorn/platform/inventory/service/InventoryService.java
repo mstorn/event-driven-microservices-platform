@@ -1,7 +1,6 @@
 package com.mstorn.platform.inventory.service;
 
 import com.mstorn.platform.inventory.event.OrderCreatedEvent;
-import com.mstorn.platform.inventory.messaging.OrderEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

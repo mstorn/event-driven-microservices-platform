@@ -5,11 +5,10 @@
 	<parent>
 		<groupId>com.mstorn.platform</groupId>
 		<artifactId>event-driven-microservices-platform</artifactId>
-		<version>1.0.0</version>
+		<version>0.2.0</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<artifactId>order-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>order-service</name>
 	<description>Order service of an event-driven microservice platform using Spring Boot and Apache Kafka</description>
 	<url/>

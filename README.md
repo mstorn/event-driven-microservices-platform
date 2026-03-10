@@ -20,8 +20,9 @@ The project is intentionally built step by step to illustrate architectural deci
 - Spring Boot
 - Maven
 - JUnit 5
-- Docker (planned)
-- Apache Kafka (planned)
+- Keycloak
+- Docker
+- Apache Kafka
 - Kubernetes (planned)
 
 
@@ -71,6 +72,25 @@ Instead of strictly applying the full TDD cycle for every component, a pragmatic
 - infrastructure components will be tested where appropriate
 
 This balances development speed with reliable test coverage.
+
+
+---
+
+## 🔐 Identity & Access Management (Keycloak)
+
+Start Keycloak:
+
+cd infrastructure/docker/keycloak
+docker compose up -d
+
+Admin Console:
+http://localhost:8082
+
+Credentials:
+admin / admin
+
+Realm:
+event-driven-microservices-platform
 
 
 ---

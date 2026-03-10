@@ -1,11 +1,15 @@
 package com.mstorn.platform.order.web;
 
 import com.mstorn.platform.order.application.OrderService;
+import com.mstorn.platform.order.config.SecurityTestConfig;
 import com.mstorn.platform.order.domain.model.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -16,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(OrderController.class)
+@Import(SecurityTestConfig.class)
 class OrderControllerTest {
 
     @Autowired
@@ -25,6 +30,7 @@ class OrderControllerTest {
     private OrderService orderService;
 
     @Test
+    @WithMockUser
     void shouldCreateOrder() throws Exception {
 
         Order mockOrder = new Order("Test Order", 5);
@@ -46,12 +52,14 @@ class OrderControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturn400_whenBodyMissing() throws Exception {
         mockMvc.perform(post("/orders"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
+    @WithMockUser
     void shouldReturn400_whenQuantityInvalid() throws Exception {
         mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)

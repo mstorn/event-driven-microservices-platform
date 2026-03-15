@@ -14,8 +14,9 @@ public class SecurityTestConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/orders").hasRole("USER")
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "/orders")
+                        .hasAuthority("SCOPE_orders.write")
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }

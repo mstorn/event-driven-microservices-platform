@@ -95,7 +95,7 @@ class OrderControllerSecurityWebTest {
         }
 
         @Test
-        @WithMockUser(roles = "USER")
+        @WithMockUser(authorities = "SCOPE_orders.write")
         void shouldAllowAccessForUserRole() throws Exception {
 
             Mockito.when(orderService.createOrder(any()))
@@ -116,7 +116,7 @@ class OrderControllerSecurityWebTest {
     class ValidationTests {
 
         @Test
-        @WithMockUser(roles = "USER")
+        @WithMockUser(authorities = "SCOPE_orders.write")
         void shouldReturn400_whenBodyMissing() throws Exception {
             mockMvc.perform(post("/orders")
                             .contentType(MediaType.APPLICATION_JSON))
@@ -124,7 +124,7 @@ class OrderControllerSecurityWebTest {
         }
 
         @Test
-        @WithMockUser(roles = "USER")
+        @WithMockUser(authorities = "SCOPE_orders.write")
         void shouldReturn400_whenQuantityInvalid() throws Exception {
             String invalidBody = """
                     {

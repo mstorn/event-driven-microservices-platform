@@ -14,7 +14,8 @@ public class OrderMapper {
         return new OrderResponse(
                 order.getId(),
                 order.getDescription(),
-                order.getQuantity()
+                order.getQuantity(),
+                order.getStatus()
         );
     }
 }

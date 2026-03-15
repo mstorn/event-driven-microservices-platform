@@ -11,7 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				version = "1.0",
 				description = "Event-driven Order Management Service"
 		)
-)@SpringBootApplication
+)
+@SpringBootApplication
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {

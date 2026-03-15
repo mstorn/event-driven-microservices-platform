@@ -1,8 +1,9 @@
 package com.mstorn.platform.order.application;
 
-import com.mstorn.platform.order.domain.event.OrderCreatedEvent;
+import com.mstorn.platform.events.OrderCreatedEvent;
 import com.mstorn.platform.order.domain.model.Order;
 import com.mstorn.platform.order.application.port.OrderEventPublisher;
+import com.mstorn.platform.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +16,13 @@ class OrderServiceTest {
 
     private OrderEventPublisher publisher;
     private OrderService service;
+    private OrderRepository repository;
 
     @BeforeEach
     void setup() {
         publisher = mock(OrderEventPublisher.class);
         service = new OrderService(publisher);
+        repository = mock(OrderRepository.class);
     }
 
     @Test

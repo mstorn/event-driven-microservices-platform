@@ -95,6 +95,13 @@ event-driven-microservices-platform
 
 ---
 
+## Saga Workflow
+
+See architecture/saga-workflow.md
+
+
+---
+
 # Project Structure
 
 ```

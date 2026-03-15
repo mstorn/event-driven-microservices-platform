@@ -1,20 +1,23 @@
-package com.mstorn.platform.order.domain.event;
+package com.mstorn.platform.events;
 
 import java.time.Instant;
 import java.util.UUID;
 
 public class OrderCreatedEvent {
 
-    private final UUID orderId;
-    private final int quantity;
-    private final String description;
-    private final Instant createdAt;
+    private UUID orderId;
+    private int quantity;
+    private String description;
+    private Instant createdAt;
 
     public OrderCreatedEvent(UUID orderId, String description, int quantity) {
         this.orderId = orderId;
         this.description = description;
         this.quantity = quantity;
         this.createdAt = Instant.now();
+    }
+
+    public OrderCreatedEvent() {
     }
 
     public UUID getOrderId() {

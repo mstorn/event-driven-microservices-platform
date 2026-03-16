@@ -1,9 +1,7 @@
-package com.mstorn.platform.inventory.messaging;
+package com.mstorn.platform.inventory.infrastructure.messaging;
 
-import com.mstorn.platform.events.InventoryReleasedEvent;
 import com.mstorn.platform.events.KafkaTopics;
 import com.mstorn.platform.events.OrderCreatedEvent;
-import com.mstorn.platform.events.PaymentFailedEvent;
 import com.mstorn.platform.inventory.service.InventoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

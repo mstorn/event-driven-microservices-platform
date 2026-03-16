@@ -14,13 +14,21 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
     private static final Logger log = LoggerFactory.getLogger(KafkaOrderEventPublisher.class);
 
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
+    private final ProcessedEventStore processedEventStore;
 
-    public KafkaOrderEventPublisher(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
+    public KafkaOrderEventPublisher(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate, ProcessedEventStore processedEventStore) {
         this.kafkaTemplate = kafkaTemplate;
+        this.processedEventStore = processedEventStore;
     }
 
     @Override
     public void publishOrderCreated(OrderCreatedEvent event) {
+        if(processedEventStore.alreadyProcessed(event.getEventId())) {
+            return;
+        }
+        processedEventStore.markProcessed(event.getEventId());
+
+
         log.info("Publishing OrderCreatedEvent to Kafka topic='{}', orderId={}",
                 KafkaTopics.ORDER_CREATED,
                 event.getOrderId());

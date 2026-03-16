@@ -1,9 +1,6 @@
-package com.mstorn.platform.payment.messaging;
+package com.mstorn.platform.payment.infrastructure.messaging;
 
 import com.mstorn.platform.events.KafkaTopics;
-import com.mstorn.platform.events.OrderCreatedEvent;
-import com.mstorn.platform.events.PaymentCompletedEvent;
-import com.mstorn.platform.events.PaymentFailedEvent;
 import com.mstorn.platform.payment.application.PaymentService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;

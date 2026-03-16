@@ -1,9 +1,8 @@
-package com.mstorn.platform.inventory.messaging;
+package com.mstorn.platform.inventory.infrastructure.messaging;
 
 import com.mstorn.platform.events.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +13,20 @@ public class InventoryEventPublisher {
             LoggerFactory.getLogger(InventoryEventPublisher.class);
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final ProcessedEventStore processedEventStore;
 
     public InventoryEventPublisher(
-            KafkaTemplate<String, Object> kafkaTemplate) {
+            KafkaTemplate<String, Object> kafkaTemplate, ProcessedEventStore processedEventStore) {
         this.kafkaTemplate = kafkaTemplate;
+        this.processedEventStore = processedEventStore;
     }
 
     public void publishInventoryReserved(InventoryReservedEvent event) {
+
+        if(processedEventStore.alreadyProcessed(event.getEventId())) {
+            return;
+        }
+        processedEventStore.markProcessed(event.getEventId());
 
         log.info("Publishing InventoryReservedEvent orderId={}",
                 event.getOrderId());
@@ -29,6 +35,10 @@ public class InventoryEventPublisher {
     }
 
     public void publishInventoryFailed(InventoryFailedEvent event) {
+        if(processedEventStore.alreadyProcessed(event.getEventId())) {
+            return;
+        }
+        processedEventStore.markProcessed(event.getEventId());
 
         log.info("Publishing InventoryFailedEvent orderId={}",
                 event.getOrderId());

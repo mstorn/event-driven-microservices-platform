@@ -1,7 +1,7 @@
 package com.mstorn.platform.inventory.service;
 
 import com.mstorn.platform.events.*;
-import com.mstorn.platform.inventory.messaging.InventoryEventPublisher;
+import com.mstorn.platform.inventory.infrastructure.messaging.InventoryEventPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;

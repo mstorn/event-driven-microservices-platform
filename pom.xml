@@ -20,6 +20,11 @@
 
     <name>Event-Driven Microservices Platform</name>
 
+    <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+    </properties>
+
     <modules>
         <module>shared/event-model</module>
         <module>services/order-service</module>
@@ -76,6 +81,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>
+                        -javaagent:${project.basedir}/infrastructure/observability/opentelemetry-javaagent.jar
+                    </jvmArguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>

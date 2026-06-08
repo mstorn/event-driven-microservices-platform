@@ -6,14 +6,10 @@ import com.mstorn.platform.order.domain.model.Order;
 import com.mstorn.platform.order.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class OrderService {
@@ -21,12 +17,11 @@ public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderEventPublisher eventPublisher;
+    private final OrderRepository orderRepository;
 
-    private OrderRepository orderRepository;
-
-    public OrderService(OrderEventPublisher eventPublisher) {
+    public OrderService(OrderEventPublisher eventPublisher, OrderRepository orderRepository) {
         this.eventPublisher = eventPublisher;
-        this.orderRepository = new OrderRepository();
+        this.orderRepository = orderRepository;
     }
 
     public Order createOrder(Order order) {
@@ -53,8 +48,9 @@ public class OrderService {
     )
     public void handle(PaymentCompletedEvent event) {
 
-        Order order = orderRepository.findById(event.getOrderId());
+        Order order = findOrder(event.getOrderId());
 
+        // Two-step transition keeps the domain state progression explicit.
         order.markPaymentCompleted();
         order.complete();
 
@@ -66,9 +62,7 @@ public class OrderService {
     )
     public void handle(PaymentFailedEvent event) {
 
-        Order order = orderRepository.findById(event.getOrderId());
-
-        order.cancel();
+        cancelOrder(event.getOrderId());
 
     }
 
@@ -78,11 +72,16 @@ public class OrderService {
     )
     public void handle(InventoryReleasedEvent event) {
 
-        Order order = orderRepository.findById(event.getOrderId());
-
-        order.cancel();
+        cancelOrder(event.getOrderId());
 
     }
 
+    private Order findOrder(UUID orderId) {
+        return orderRepository.findById(orderId);
+    }
 
+    private void cancelOrder(UUID orderId) {
+        Order order = findOrder(orderId);
+        order.cancel();
+    }
 }
